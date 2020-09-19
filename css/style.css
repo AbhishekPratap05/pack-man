@@ -3,11 +3,12 @@
     margin: 0;
     padding: 0;
   }
-  
+  body {
+    background: rgb(2, 0, 31);
+  }
   #screen {
     width:min(1920px,100vw);
     height: min(1080px,100vh);
-    background: url('../img/background.jpg') no-repeat center center;
     background-size: cover;
   }
   
@@ -23,6 +24,8 @@
     position: relative;
     display: inline-grid;
     background: black;
+    padding: 1px;
+    outline: 1px white solid;
   }
   
   .game-status {
