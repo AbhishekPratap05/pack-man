@@ -1,5 +1,5 @@
 import { LEVEL,OBJECT_TYPE  } from "./setup";
-import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME, EAT_GHOST_BONUS} from "./const";
+import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME, EAT_GHOST_BONUS, DOT_SCORE} from "./const";
 import { randomMovement } from "./GhostMoves";
 
 import GameBoard from './GameBoard';
@@ -59,6 +59,13 @@ const gameLoop = (pacman,ghosts) => {
 
     ghosts.forEach(ghost => gameBoard.moveCharacter(ghost));
     checkCollision(pacman,ghosts);
+
+    //check if pacman eats a dot
+    if(gameBoard.objectExist(pacman.pos,OBJECT_TYPE.DOT)){
+        gameBoard.removeObject(pacman.pos,[OBJECT_TYPE.DOT]);
+        gameBoard.dotCount--;
+        score += DOT_SCORE;
+    }
 }
 
 const startGame = () => {
