@@ -16,6 +16,16 @@ import soundGhost from '../sounds/eat_ghost.wav';
 const gameGrid = document.querySelector("#game");
 const scoreTable = document.querySelector("#score");
 const startButton = document.querySelector("#start-button");
+const topButton = document.querySelector("#top-button");
+const leftButton = document.querySelector("#left-button");
+const rightButton = document.querySelector("#right-button");
+const bottomButton = document.querySelector("#bottom-button");
+const navigationButtonContainer = document.querySelector("#navigationContainer");
+startButton.textContent = "🕹️";
+topButton.textContent = "🔼";
+leftButton.textContent = "◀️";
+rightButton.textContent = "▶️";
+bottomButton.textContent = "🔽";
 
 const gameBoard = GameBoard.createGameBoard(gameGrid,LEVEL);
 
@@ -38,10 +48,16 @@ const gameOver = (pacman,grid) => {
     document.removeEventListener('keydown',e =>
         pacman.handleKeyInput(e, gameBoard.objectExist)
     );
+    topButton.removeEventListener('click',()=>pacman.handleKeyInput("ArrowUp", gameBoard.objectExist));
+    leftButton.removeEventListener('click',()=>pacman.handleKeyInput("ArrowLeft", gameBoard.objectExist));
+    rightButton.removeEventListener('click',()=>pacman.handleKeyInput("ArrowRight", gameBoard.objectExist));
+    bottomButton.removeEventListener('click',()=>pacman.handleKeyInput("ArrowDown", gameBoard.objectExist));
+
     gameBoard.showGameStatus(gameWin);
     clearInterval(timer);
 
     startButton.classList.remove('hide');
+    navigationButtonContainer.classList.add('hide');
     
 }
 
@@ -114,6 +130,7 @@ const startGame = () => {
     score = INITIAL_SCORE;
 
     startButton.classList.add('hide');
+    navigationButtonContainer.classList.remove('hide');
 
     gameBoard.createGrid(LEVEL);
     const pacman =new Pacman(2,287);
@@ -121,6 +138,11 @@ const startGame = () => {
     document.addEventListener('keydown',e => 
         pacman.handleKeyInput(e, gameBoard.objectExist)
     );
+    
+    topButton.addEventListener('click',()=>pacman.handleKeyInput("ArrowUp", gameBoard.objectExist));
+    leftButton.addEventListener('click',()=>pacman.handleKeyInput("ArrowLeft", gameBoard.objectExist));
+    rightButton.addEventListener('click',()=>pacman.handleKeyInput("ArrowRight", gameBoard.objectExist));
+    bottomButton.addEventListener('click',()=>pacman.handleKeyInput("ArrowDown", gameBoard.objectExist));
     const ghosts = [
         new  Ghost(5,188,randomMovement,OBJECT_TYPE.BLINKY),
         new  Ghost(4,209,randomMovement,OBJECT_TYPE.PINKY),

@@ -46,7 +46,9 @@ class Pacman {
 
     handleKeyInput = (e, objectExist) => {
         let dir;
-        if(e.keyCode>=37 && e.keyCode <= 40){
+        if(typeof e ===  "string"){
+            dir = DIRECTIONS[e];
+        }else if(e.keyCode>=37 && e.keyCode <= 40){
             dir = DIRECTIONS[e.key];
         }else{
             return;

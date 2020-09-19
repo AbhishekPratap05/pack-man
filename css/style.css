@@ -6,11 +6,6 @@
   body {
     background: rgb(2, 0, 31);
   }
-  #screen {
-    width:min(1920px,100vw);
-    height: min(1080px,100vh);
-    background-size: cover;
-  }
   
   #wrapper {
     position: relative;
@@ -60,6 +55,7 @@
   
   #start-button {
     margin-top: 20px;
+    font-size: 40px;
   }
   
   .hide {
@@ -170,4 +166,16 @@
         0 20px
       );
     }
+  }
+  .navigation-button-container {
+    margin-top: 20px;
+    margin-left: 48px;
+  }
+  .side-button-container{
+    display: flex;
+    gap:50px;
+    margin-left: -48px;
+  }
+  .navigation-buttons{
+    font-size: 30px;
   }

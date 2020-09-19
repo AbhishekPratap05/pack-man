@@ -8,11 +8,17 @@
     <title>Pacman</title>
 </head>
 <body>
-    <div id="screen">
-        <div id="wrapper">
-            <div id="game"></div>
-            <div id="score"></div>
-            <button id="start-button">Start Game</button>
+    <div id="wrapper">
+        <div id="game"></div>
+        <div id="score">SCORE</div>
+        <button id="start-button">Start Game</button>
+        <div class="navigation-button-container hide" id="navigationContainer">
+            <button class="navigation-buttons" id="top-button">Top</button>
+            <div class="side-button-container">
+                <button class="navigation-buttons" id="left-button">Left</button>
+                <button class="navigation-buttons" id="right-button">Right</button>
+            </div>
+            <button class="navigation-buttons" id="bottom-button">Bottom</button>
         </div>
     </div>
 </body>
