@@ -1,5 +1,5 @@
 import { LEVEL,OBJECT_TYPE  } from "./setup";
-import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME, EAT_GHOST_BONUS, DOT_SCORE} from "./const";
+import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME, EAT_GHOST_BONUS, DOT_SCORE,PILL_SCORE} from "./const";
 import { randomMovement } from "./GhostMoves";
 
 import GameBoard from './GameBoard';
@@ -66,6 +66,30 @@ const gameLoop = (pacman,ghosts) => {
         gameBoard.dotCount--;
         score += DOT_SCORE;
     }
+    //check if pacman eats a powerPill
+    if(gameBoard.objectExist(pacman.pos,OBJECT_TYPE.PILL)){
+        gameBoard.removeObject(pacman.pos,[OBJECT_TYPE.PILL]);
+        
+        pacman.powerPill = true;
+        score += PILL_SCORE;
+
+        clearTimeout(powerPillTimer);
+        powerPillTimer = setTimeout(() => (pacman.powerPill = false),POWER_PILL_TIME);
+    }
+    //check ghost scare mode depending on power pill
+    if(pacman.powerPill !== powerPillActive){
+        powerPillActive = pacman.powerPill;
+        ghosts.forEach(ghost => (ghost.isScared = pacman.powerPill));
+    }
+
+    //check if all the dots have been eaten
+    if(gameBoard.dotCount === 0){
+        gameWin = true;
+        gameOver(pacman,ghosts);
+    }
+
+    //show the score
+    scoreTable.innerHTML = score;
 }
 
 const startGame = () => {
