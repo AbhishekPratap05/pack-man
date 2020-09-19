@@ -1,7 +1,11 @@
 import { LEVEL,OBJECT_TYPE  } from "./setup";
 import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME} from "./const";
+import { randomMovement } from "./GhostMoves";
+
 import GameBoard from './GameBoard';
 import Pacman from './Packman';
+import Ghost from "./Ghost";
+
 
 //DOM Elements
 const gameGrid = document.querySelector("#game");
@@ -26,8 +30,9 @@ const checkCollision = (Pacman,ghost) => {
 
 }
 
-const gameLoop = (pacman,ghost) => {
+const gameLoop = (pacman,ghosts) => {
     gameBoard.moveCharacter(pacman);
+    ghosts.forEach(ghost => gameBoard.moveCharacter(ghost));
 }
 
 const startGame = () => {
@@ -43,8 +48,14 @@ const startGame = () => {
     document.addEventListener('keydown',e => 
         pacman.handleKeyInput(e, gameBoard.objectExist)
     );
+    const ghosts = [
+        new  Ghost(5,188,randomMovement,OBJECT_TYPE.BLINKY),
+        new  Ghost(4,209,randomMovement,OBJECT_TYPE.PINKY),
+        new  Ghost(3,230,randomMovement,OBJECT_TYPE.INKY),
+        new  Ghost(2,251,randomMovement,OBJECT_TYPE.CLYDE)
+    ]
     timer = setInterval(()=>
-        gameLoop(pacman),GLOBAL_SPEED
+        gameLoop(pacman,ghosts),GLOBAL_SPEED
     )
 }
 
