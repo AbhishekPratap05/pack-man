@@ -1,5 +1,5 @@
 import { LEVEL,OBJECT_TYPE  } from "./setup";
-import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME} from "./const";
+import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME, EAT_GHOST_BONUS} from "./const";
 import { randomMovement } from "./GhostMoves";
 
 import GameBoard from './GameBoard';
@@ -22,17 +22,43 @@ let powerPillActive = false;
 let powerPillTimer = null;
 
 
-const gameOver = (Pacman,grid) => {
+const gameOver = (pacman,grid) => {
+    document.removeEventListener('keydown',e =>
+        pacman.handleKeyInput(e, gameBoard.objectExist)
+    );
+    gameBoard.showGameStatus(gameWin);
+    clearInterval(timer);
+
+    startButton.classList.remove('hide');
     
 }
 
-const checkCollision = (Pacman,ghost) => {
+const checkCollision = (pacman,ghosts) => {
+    const collidedGhost = ghosts.find(ghost => pacman.pos === ghost.pos);
 
+    if(collidedGhost){
+        if(pacman.powerPill){
+            gameBoard.removeObject(collidedGhost.pos, [
+                OBJECT_TYPE.GHOST,
+                OBJECT_TYPE.SCARED,
+                collidedGhost.name
+            ]);
+            collidedGhost.pos = collidedGhost.startPos;
+            score += EAT_GHOST_BONUS;
+        }else{
+            gameBoard.removeObject(pacman.pos, [OBJECT_TYPE.PACMAN]);
+            gameBoard.rotateDiv(pacman.pos,0);
+            gameOver(pacman,gameGrid);
+        }
+    }
 }
 
 const gameLoop = (pacman,ghosts) => {
     gameBoard.moveCharacter(pacman);
+    checkCollision(pacman,ghosts);
+
     ghosts.forEach(ghost => gameBoard.moveCharacter(ghost));
+    checkCollision(pacman,ghosts);
 }
 
 const startGame = () => {
