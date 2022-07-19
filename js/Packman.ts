@@ -1,7 +1,14 @@
 import { OBJECT_TYPE, DIRECTIONS } from "./setup";
 
 class Pacman {
-    constructor(speed, startPos) {
+    private pos: number;
+    private speed: number;
+    private dir: any;
+    private timer: number;
+    private powerPill: boolean;
+    private rotation: boolean;
+
+    constructor(speed: number, startPos: number) {
         this.pos = startPos;
         this.speed = speed;
         this.dir = null;
@@ -11,33 +18,33 @@ class Pacman {
     }
 
     shouldMove = () => {
-        if(!this.dir) return false;
+        if (!this.dir) return false;
 
-        if(this.timer === this.speed){
+        if (this.timer === this.speed) {
             this.timer = 0;
             return true;
         }
         this.timer++;
     }
 
-    getNextMove =(objectExist) => {
-        let nextMovePos  = this.pos + this.dir.movement;
+    getNextMove = (objectExist) => {
+        let nextMovePos = this.pos + this.dir.movement;
 
-        if(
-            objectExist(nextMovePos,OBJECT_TYPE.WALL)||
-            objectExist(nextMovePos,OBJECT_TYPE.GHOSTLAIR)
-        ){
+        if (
+            objectExist(nextMovePos, OBJECT_TYPE.WALL) ||
+            objectExist(nextMovePos, OBJECT_TYPE.GHOSTLAIR)
+        ) {
             nextMovePos = this.pos;
         }
 
-        return { nextMovePos, direction:this.dir};
+        return { nextMovePos, direction: this.dir };
     }
 
     makeMove = () => {
         const classesToRemove = [OBJECT_TYPE.PACMAN];
         const classesToAdd = [OBJECT_TYPE.PACMAN];
 
-        return {classesToRemove, classesToAdd}
+        return { classesToRemove, classesToAdd }
     }
 
     setNewPos = (nextMovePos) => {
@@ -46,15 +53,15 @@ class Pacman {
 
     handleKeyInput = (e, objectExist) => {
         let dir;
-        if(typeof e ===  "string"){
+        if (typeof e === "string") {
             dir = DIRECTIONS[e];
-        }else if(e.keyCode>=37 && e.keyCode <= 40){
+        } else if (e.keyCode >= 37 && e.keyCode <= 40) {
             dir = DIRECTIONS[e.key];
-        }else{
+        } else {
             return;
         }
         const nextMovePos = this.pos + dir.movement;
-        if(objectExist(nextMovePos, OBJECT_TYPE.WALL) || objectExist(nextMovePos,OBJECT_TYPE.GHOSTLAIR)) return;
+        if (objectExist(nextMovePos, OBJECT_TYPE.WALL) || objectExist(nextMovePos, OBJECT_TYPE.GHOSTLAIR)) return;
         this.dir = dir;
     }
 }
