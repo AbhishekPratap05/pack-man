@@ -1,10 +1,10 @@
 import { LEVEL, OBJECT_TYPE } from "./setup";
 import { INITIAL_SCORE, GLOBAL_SPEED, POWER_PILL_TIME, EAT_GHOST_BONUS, DOT_SCORE, PILL_SCORE } from "./const";
-import { randomMovement } from "./GhostMoves";
+import { randomMovement, RandomMovement } from "./GhostMoves.ts";
 
-import GameBoard from './GameBoard';
+import GameBoard from './GameBoard.ts';
 import Pacman from './Packman.ts';
-import Ghost from "./Ghost";
+import Ghost from "./Ghost.ts";
 
 import soundDot from '../sounds/munch.wav';
 import soundPill from '../sounds/pill.wav';
