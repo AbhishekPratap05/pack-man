@@ -3,7 +3,7 @@ import { DIRECTIONS, OBJECT_TYPE } from "./setup";
 
 class Ghost {
     public name: string;
-    private movement: RandomMovementFun;
+    private movementFun: RandomMovementFun;
     public startPos: number;
     public pos: number;
     private dir: IDirection
@@ -12,9 +12,9 @@ class Ghost {
     public isScared: boolean;
     private rotation: boolean;
 
-    constructor(speed = 5, startPos: number, movement: RandomMovementFun, name: string) {
+    constructor(speed = 5, startPos: number, movementFun: RandomMovementFun, name: string) {
         this.name = name;
-        this.movement = movement;
+        this.movementFun = movementFun;
         this.startPos = startPos;
         this.pos = startPos;
         this.dir = DIRECTIONS.ArrowRight;
@@ -34,7 +34,7 @@ class Ghost {
     }
 
     getNextMove = (objectExist: ObjectExistFun) => {
-        const { nextMovePos, direction } = this.movement(this.pos, this.dir, objectExist);
+        const { nextMovePos, direction } = this.movementFun(this.pos, this.dir, objectExist);
         return { nextMovePos, direction };
     }
     makeMove = () => {
