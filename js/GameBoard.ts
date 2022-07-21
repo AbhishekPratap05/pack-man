@@ -1,15 +1,21 @@
 import { OBJECT_TYPE, CLASS_LIST } from "./setup";
 import { GRID_SIZE, CELL_SIZE, WIN, LOSE } from "./const";
+import { ObjectExistFun } from "../types";
 
 class GameBoard {
-    private dotCount: number;
+    public dotCount: number;
     private grid: HTMLDivElement[];
     private domGrid: HTMLDivElement;
+    public objectExist: ObjectExistFun;
 
     constructor(domGrid: HTMLDivElement) {
         this.dotCount = 0;
         this.grid = [];
         this.domGrid = domGrid;
+
+        this.objectExist = (pos: number, object: string) => {
+            return this.grid[pos].classList.contains(object);
+        }
     }
 
     showGameStatus = (gameWin: boolean) => {
@@ -43,11 +49,10 @@ class GameBoard {
     removeObject = (pos: number, classes: string[]) => {
         this.grid[pos].classList.remove(...classes);
     }
-    objectExist = (pos: number, object: string) => {
-        return this.grid[pos].classList.contains(object);
-    }
 
-    rotateDiv = (pos: number, deg) => {
+
+
+    rotateDiv = (pos: number, deg: number) => {
         this.grid[pos].style.transform = `rotate(${deg}deg)`;
     }
 

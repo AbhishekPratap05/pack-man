@@ -1,9 +1,10 @@
+import { ObjectExistFun, RandomMovementFun, IDirection } from "../types";
 import { DIRECTIONS, OBJECT_TYPE } from "./setup";
 
 
-export type RandomMovementFun = (position: number, direction: any, objectExist: any) => any;
 
-export const randomMovement: RandomMovementFun = (position: number, direction: any, objectExist: any) => {
+
+export const randomMovement: RandomMovementFun = (position: number, direction: IDirection, objectExist: ObjectExistFun) => {
     let dir = direction;
     let nextMovePos = position + dir.movement;
     //Create an array from the directions object keys

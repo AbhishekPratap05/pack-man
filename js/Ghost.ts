@@ -1,15 +1,15 @@
-import { RandomMovementFun } from "./GhostMoves";
+import { RandomMovementFun, ObjectExistFun, IDirection } from "../types";
 import { DIRECTIONS, OBJECT_TYPE } from "./setup";
 
 class Ghost {
-    private name: string;
+    public name: string;
     private movement: RandomMovementFun;
-    private startPos: number;
-    private pos: number;
-    private dir: any; //IDirection
+    public startPos: number;
+    public pos: number;
+    private dir: IDirection
     private speed: number;
     private timer: number;
-    private isScared: boolean;
+    public isScared: boolean;
     private rotation: boolean;
 
     constructor(speed = 5, startPos: number, movement: RandomMovementFun, name: string) {
@@ -33,7 +33,7 @@ class Ghost {
         return false;
     }
 
-    getNextMove = (objectExist) => {
+    getNextMove = (objectExist: ObjectExistFun) => {
         const { nextMovePos, direction } = this.movement(this.pos, this.dir, objectExist);
         return { nextMovePos, direction };
     }
@@ -44,7 +44,7 @@ class Ghost {
         if (this.isScared) classesToAdd = [...classesToAdd, OBJECT_TYPE.SCARED];
         return { classesToRemove, classesToAdd };
     }
-    setNewPos = (nextMovePos: number, direction: any) => {
+    setNewPos = (nextMovePos: number, direction: IDirection) => {
         this.pos = nextMovePos;
         this.dir = direction;
     }

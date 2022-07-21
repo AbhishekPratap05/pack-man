@@ -1,17 +1,18 @@
+import { RandomMovementFun, ObjectExistFun, IDirection } from "../types";
 import { OBJECT_TYPE, DIRECTIONS } from "./setup";
 
 class Pacman {
-    private pos: number;
+    public pos: number;
     private speed: number;
-    private dir: any;
+    private dir: IDirection;
     private timer: number;
-    private powerPill: boolean;
+    public powerPill: boolean;
     private rotation: boolean;
 
     constructor(speed: number, startPos: number) {
         this.pos = startPos;
         this.speed = speed;
-        this.dir = null;
+        this.dir = DIRECTIONS.None;
         this.timer = 0;
         this.powerPill = false;
         this.rotation = true;
@@ -27,7 +28,7 @@ class Pacman {
         this.timer++;
     }
 
-    getNextMove = (objectExist) => {
+    getNextMove = (objectExist: ObjectExistFun) => {
         let nextMovePos = this.pos + this.dir.movement;
 
         if (
@@ -47,11 +48,11 @@ class Pacman {
         return { classesToRemove, classesToAdd }
     }
 
-    setNewPos = (nextMovePos) => {
+    setNewPos = (nextMovePos: number) => {
         this.pos = nextMovePos;
     }
 
-    handleKeyInput = (e, objectExist) => {
+    handleKeyInput = (e: string | KeyboardEvent, objectExist: ObjectExistFun) => {
         let dir;
         if (typeof e === "string") {
             dir = DIRECTIONS[e];
