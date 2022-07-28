@@ -17,10 +17,10 @@ import soundGhost from '../sounds/eat_ghost.wav';
 class Game {
 
     private score = INITIAL_SCORE;
-    private timer: number | string | ReturnType<typeof setTimeout> | undefined = undefined;
+    private timer: number | ReturnType<typeof setTimeout> | undefined = undefined;
     private gameWin = false;
     private powerPillActive = false;
-    private powerPillTimer: number | string | ReturnType<typeof setTimeout> | undefined = undefined;
+    private powerPillTimer: number | ReturnType<typeof setTimeout> | undefined = undefined;
 
     private readonly gameGrid: HTMLDivElement | null;
     private readonly scoreTable: HTMLDivElement | null;

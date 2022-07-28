@@ -53,7 +53,7 @@ class Pacman {
     }
 
     handleKeyInput = (e: string | KeyboardEvent, objectExist: ObjectExistFun) => {
-        let dir;
+        let dir: IDirection;
         if (typeof e === "string") {
             dir = DIRECTIONS[e];
         } else if (e.keyCode >= 37 && e.keyCode <= 40) {
